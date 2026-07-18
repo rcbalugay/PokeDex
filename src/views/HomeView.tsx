@@ -91,7 +91,41 @@ export function HomeView() {
     return (
         <main className="home-shell">
             <Header />
-            <section className="home-hero"></section>
+            <section className="home-hero">
+                <div className="hero-ball ball-left" />
+                <div className="hero-ball ball-right" />
+                <img className="hero-logo" src={heroLogo} alt="PokéDex" />
+            </section>
+
+            <section className="home-content">
+                <SearchBar value={search} onChange={setSearch} />
+                <FilterPanel
+                activeTypes={activeTypes}
+                onToggleType={toggleType}
+                sort={sort}
+                onSortChange={setSort}
+                onReset={resetFilters}
+                />
+                
+                <div className="results-summary">
+                    <span>{visiblePokemon.length} Pokémon displayed</span>
+                    <span>
+                        {activeTypes.length ? `Types: ${activeTypes.join(" + ")}` : "All types"}
+                    </span>
+                </div>
+
+                <PokemonGrid
+                pokemonList={visiblePokemon}
+                loading={loading}
+                onResetFilters={resetFilters}
+                />
+
+                <LoadMoreButton
+                onLoadMore={loadNextBatch}
+                loading={loading}
+                hasMore={hasMore}
+                />
+            </section>
         </main>
-    )
+    );
 } 

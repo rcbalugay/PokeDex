@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 import { PokemonCardData } from "../types/pokemon";
 import { padId } from "../utils/formatters";
@@ -7,12 +7,36 @@ interface PokemonCardProps {
     pokemon: PokemonCardData;
 }
 
+const TYPE_COLORS: Record<string, string> = {
+    Grass: '#7ab758',
+    Poison: '#a467bd',
+    Fire: '#e86b4b',
+    Water: '#5aaec4',
+    Electric: '#e7ba2c',
+    Normal: '#a9a47f',
+    Fairy: '#d987a3',
+    Ghost: '#76529b',
+    Dark: '#405054',
+    Bug: '#92a212',
+    Psychic: '#ea5d89',
+    Ground: '#ceb256',
+    Dragon: '#6751c9',
+    Ice: '#72ceda',
+    Steel: '#96a4b1',
+    Rock: '#b6a136',
+    Fighting: '#c85440',
+    Flying: '#8094ee',
+};
+
 export function PokemonCard({ pokemon }: PokemonCardProps) {
     const [imgError, setImgError] = useState(false);
     const fallbackUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
 
+    const primaryType = pokemon.types[0] || 'Normal';
+    const cardColor = TYPE_COLORS[primaryType] || '#a9a47f';
+
     return (
-        <Link to={`/pokemon/${pokemon.id}`} className="home-card">
+        <Link to={`/pokemon/${pokemon.id}`} className="home-card" style={{ '--card': cardColor} as React.CSSProperties}>
             <div>
                 <div className="home-chip-row">
                     {pokemon.types.map((type) => (
@@ -23,9 +47,9 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
                 </div>
                 <h2>{pokemon.name}</h2>
                 <p>{pokemon.desc}</p>
-                <button type="button" className="know-more-btn">
+                <span className="know-more-btn">
                     Know More
-                </button>
+                </span>
             </div>
             <div className="card-number">#{padId(pokemon.id)}</div>
             <img

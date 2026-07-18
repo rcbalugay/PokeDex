@@ -19,10 +19,12 @@ export function HomeView() {
     const [search, setSearch] = useState("");
     const [activeTypes, setActiveTypes] = useState<string[]>([]);
     const [sort, setSort] = useState("number");
+    const [error, setError] = useState<string | null>(null);
 
     const loadNextBatch = useCallback(async () => {
         if (loading) return;
         setLoading(true);
+        setError(null);
         try {
             const listRes = await fetchPokemonList(PAGE_SIZE, offset);
             if (!listRes.results.length) {
@@ -45,6 +47,7 @@ export function HomeView() {
             }
         } catch (err) {
             console.error("Failed to load more Pokémon:", err);
+            setError("Failed to fetch the list of Pokémons. Please check your internet connection and try again.");
         } finally {
             setLoading(false);
         }
@@ -112,6 +115,15 @@ export function HomeView() {
                         {activeTypes.length ? `Types: ${activeTypes.join(" + ")}` : "All types"}
                     </span>
                 </div>
+
+                {error && (
+                    <div className="error-banner">
+                        <p>{error}</p>
+                        <button type="button" onClick={loadNextBatch}>
+                            Try Again
+                        </button>
+                    </div>
+                )}
 
                 <PokemonGrid
                 pokemonList={visiblePokemon}

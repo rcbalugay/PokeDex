@@ -13,3 +13,8 @@ export function formatHeight(decimeters: number): string {
 export function formatWeight(hectograms: number): string {
     return `${(hectograms / 10).toFixed(1)}kg`;
 }
+
+export function capitalize(str: string): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

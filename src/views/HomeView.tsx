@@ -8,7 +8,6 @@ import { LoadMoreButton } from "../components/LoadMoreButton";
 import heroLogo from "../imports/image-3.png";
 import { PokemonCardData } from "../types/pokemon";
 import { padId } from "../utils/formatters";
-import { PokemonCard } from "@/components/PokemonCard";
 
 const PAGE_SIZE = 10;
 

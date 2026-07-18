@@ -1,3 +1,5 @@
+import { capitalize } from "./formatters";
+
 const TYPE_WEAKNESS_MAP: Record<string, string[]> = {
     normal: ["fighting"],
     fire: ["water", "ground", "rock"],
@@ -26,8 +28,7 @@ export function getWeaknesses(types: string[]): string[] {
         const normalizedType = type.toLowerCase();
         const weaknesses = TYPE_WEAKNESS_MAP[normalizedType] || [];
         weaknesses.forEach((w) => {
-            const formatted = w.charAt(0).toUpperCase() + w.slice(1);
-            weaknessSet.add(formatted);
+            weaknessSet.add(capitalize(w));
         });
     });
 

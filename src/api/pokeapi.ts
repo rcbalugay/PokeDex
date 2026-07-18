@@ -4,7 +4,7 @@ import {
     PokemonCardData,
     PokemonListResponse,
 } from "../types/pokemon";
-import { formatHeight, formatWeight, getImageUrl } from "../utils/formatters";
+import { capitalize, formatHeight, formatWeight, getImageUrl } from "../utils/formatters";
 import { getWeaknesses } from "../utils/weaknesses";
 
 const BASE_URL = "https://pokeapi.co/api/v2";
@@ -58,18 +58,16 @@ export async function getPokemonCardData(
         fetchPokemonSpecies(idOrName).catch(() => null),
     ]);
 
-    const types = detail.types.map(
-        (t) => t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
-    );
-
+    const types = detail.types.map((t) => capitalize(t.type.name));
     const category = species?.genera.find((g) => g.language.name === "en")?.genus || "Pokemon";
     const rawBio = species?.flavor_text_entries.find((f) => f.language.name === "en")?.flavor_text || "No description available.";
     const desc = rawBio.replace(/[\n\f\r]/g, ' ');
     const stats = detail.stats.map((s) => s.base_stat);
+    
 
     return {
         id: detail.id,
-        name: detail.name.charAt(0).toUpperCase() + detail.name.slice(1),
+        name: capitalize(detail.name),
         types,
         height: formatHeight(detail.height),
         weight: formatWeight(detail.weight),

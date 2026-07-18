@@ -17,7 +17,7 @@ export function DetailView() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [pokemon, setPokemon] = useState<PokemonCardData | null>(null);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     
     const currentId = Number(id) || 1;
@@ -51,6 +51,15 @@ export function DetailView() {
                 <div className="detail-panel loading-panel">
                     <p>Loading Pokémon profile #{padId(currentId)}...</p>
                 </div>
+            </main>
+        );
+    }
+
+    if (error || !pokemon) {
+        return (
+            <main className="not-found">
+                <h1>Pokémon #{padId(currentId)} Not Found</h1>
+                <Link to="/">Return to Pokédex</Link>
             </main>
         );
     }

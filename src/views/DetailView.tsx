@@ -68,7 +68,7 @@ export function DetailView() {
         <main className="detail-page">
             <div className="detail-panel">
                 <div className="detail-nav">
-                    <Link to="/" aria-label="Back to PokéDex Home">
+                    <Link to="/" aria-label="Back to the PokéDex">
                         ‹
                     </Link>
                     <button type="button" onClick={() => navigate(`/pokemon/${prevId}`)} aria-label="Previous Pokémon">
@@ -141,7 +141,7 @@ export function DetailView() {
                     <button type="button" onClick={() => navigate(`/pokemon/${prevId}`)}>
                         ← #{padId(prevId)}
                     </button>
-                    <Link to="/">Back to Pokédex Home</Link>
+                    <Link to="/">Back to the Pokédex</Link>
                     <button type="button" onClick={() => navigate(`/pokemon/${nextId}`)}>
                         #{padId(nextId)} →
                     </button>

@@ -3,7 +3,6 @@ import { fetchPokemonList, getPokemonCardData } from "../api/pokeapi";
 import { FilterPanel } from "../components/FilterPanel";
 import { Header } from "../components/Header";
 import { PokemonGrid } from "../components/PokemonGrid";
-import { SearchBar } from "../components/SearchBar";
 import { LoadMoreButton } from "../components/LoadMoreButton";
 import heroLogo from "../imports/image-3.png";
 import { PokemonCardData } from "../types/pokemon";
@@ -20,7 +19,7 @@ export function HomeView() {
     const [activeTypes, setActiveTypes] = useState<string[]>([]);
     const [sort, setSort] = useState("number");
     const [error, setError] = useState<string | null>(null);
-
+    const [filterOpen, setFilterOpen] = useState(false);
     const loadNextBatch = useCallback(async () => {
         if (loading) return;
         setLoading(true);
@@ -92,7 +91,12 @@ export function HomeView() {
 
     return (
         <main className="home-shell">
-            <Header />
+            <Header 
+            searchValue={search}
+            onSearchChange={setSearch}
+            onToggleFilter={() => setFilterOpen((prev) => !prev)}
+            filterOpen={filterOpen}
+            />
             <section className="home-hero">
                 <div className="hero-ball ball-left" />
                 <div className="hero-ball ball-right" />
@@ -100,8 +104,8 @@ export function HomeView() {
             </section>
 
             <section className="home-content">
-                <SearchBar value={search} onChange={setSearch} />
                 <FilterPanel
+                isOpen={filterOpen}
                 activeTypes={activeTypes}
                 onToggleType={toggleType}
                 sort={sort}

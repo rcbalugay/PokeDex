@@ -1,4 +1,5 @@
 interface FilterPanelProps {
+    isOpen: boolean;
     activeTypes: string[];
     onToggleType: (type: string) => void;
     sort: string;
@@ -23,12 +24,15 @@ const TYPE_OPTIONS = [
 ];
 
 export function FilterPanel({
+    isOpen,
     activeTypes,
     onToggleType,
     sort,
     onSortChange,
     onReset,
 }: FilterPanelProps) {
+    if (!isOpen) return null;
+    
     return (
         <section className="browse-controls" aria-label="Pokémon filters">
             <div className="filter-group type-filter">

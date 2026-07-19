@@ -9,6 +9,18 @@ import { getWeaknesses } from "../utils/weaknesses";
 
 const BASE_URL = "https://pokeapi.co/api/v2";
 
+const GENERATION_TO_REGION: Record<string, string> = {
+    "generation-i": "Kanto",
+    "generation-ii": "Johto",
+    "generation-iii": "Hoenn",
+    "generation-iv": "Sinnoh",
+    "generation-v": "Unova",
+    "generation-vi": "Kalos",
+    "generation-vii": "Alola",
+    "generation-viii": "Galar",
+    "generation-ix": "Paldea",
+};
+
 export async function fetchPokemonList(
     limit = 10,
     offset = 0
@@ -63,11 +75,17 @@ export async function getPokemonCardData(
     const rawBio = species?.flavor_text_entries.find((f) => f.language.name === "en")?.flavor_text || "No description available.";
     const desc = rawBio.replace(/[\n\f\r]/g, ' ');
     const stats = detail.stats.map((s) => s.base_stat);
+    const japaneseName = species?.names.find((n) => n.language.name === "ja-Hrkt")?.name ||
+    species?.names.find((n) => n.language.name === "ja")?.name || "";
+    const rawGen = species?.generation?.name || "generation-i";
+    const region = GENERATION_TO_REGION[rawGen] || "Kanto";
     
 
     return {
         id: detail.id,
         name: capitalize(detail.name),
+        japaneseName,
+        region,
         types,
         height: formatHeight(detail.height),
         weight: formatWeight(detail.weight),

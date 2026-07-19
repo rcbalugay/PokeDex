@@ -42,11 +42,20 @@ export interface PokeApiSpecies {
         flavor_text: string;
         language: { name: string };
     }>;
+    names: Array<{
+        name: string;
+        language: { name: string };
+    }>;
+    generation: {
+        name: string;
+    };
 }
 
 export interface PokemonCardData {
     id: number;
     name: string;
+    japaneseName?: string;
+    region?: string;
     types: string[];
     height: string;
     weight: string;

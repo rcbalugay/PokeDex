@@ -36,28 +36,26 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
     const cardColor = TYPE_COLORS[primaryType] || '#a9a47f';
 
     return (
-        <Link to={`/pokemon/${pokemon.id}`} className="home-card" style={{ '--card': cardColor} as React.CSSProperties}>
-            <div>
-                <div className="home-chip-row">
+        <Link to={`/pokemon/${pokemon.id}`} className="v-card" style={{ '--card-bg': cardColor} as React.CSSProperties}>
+            <div className="v-card-top">
+                <span className="v-card-id">{padId(pokemon.id)}</span>
+                <img
+                    src={imgError ? fallbackUrl : pokemon.imageUrl}
+                    alt={pokemon.name}
+                    onError={() => setImgError(true)}
+                    loading="lazy"
+                />
+            </div>
+            <div className="v-card-bottom">
+                <h2 className="v-card-title">{pokemon.name}</h2>
+                <div className="v-card-types">
                     {pokemon.types.map((type) => (
-                        <span key={type} className={`type-${type.toLowerCase()}`}>
+                        <span key={type} className={`type-badge type-${type.toLowerCase()}`}>
                             {type}
                         </span>
                     ))}
                 </div>
-                <h2>{pokemon.name}</h2>
-                <p>{pokemon.desc}</p>
-                <span className="know-more-btn">
-                    Know More
-                </span>
             </div>
-            <div className="card-number">#{padId(pokemon.id)}</div>
-            <img
-            src={imgError ? fallbackUrl : pokemon.imageUrl}
-            alt={pokemon.name}
-            onError={() => setImgError(true)}
-            loading="lazy"
-            />
         </Link>
     );
 }

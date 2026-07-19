@@ -4,7 +4,6 @@ import { FilterPanel } from "../components/FilterPanel";
 import { Header } from "../components/Header";
 import { PokemonGrid } from "../components/PokemonGrid";
 import { LoadMoreButton } from "../components/LoadMoreButton";
-import heroLogo from "../imports/image-3.png";
 import { PokemonCardData } from "../types/pokemon";
 import { padId } from "../utils/formatters";
 
@@ -62,7 +61,7 @@ export function HomeView() {
         setActiveTypes((prev) =>
             prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]);
     };
-    
+
     const resetFilters = () => {
         setSearch("");
         setActiveTypes([]);
@@ -73,46 +72,41 @@ export function HomeView() {
         const term = search.trim().toLowerCase();
 
         return pokemonList
-        .filter((p) => {
-            const matchesSearch = !term || p.name.toLowerCase().includes(term) ||
-            String(p.id).includes(term) || padId(p.id).includes(term);
+            .filter((p) => {
+                const matchesSearch = !term || p.name.toLowerCase().includes(term) ||
+                    String(p.id).includes(term) || padId(p.id).includes(term);
 
-            const matchesTypes = !activeTypes.length || activeTypes.every((type) => p.types.includes(type));
+                const matchesTypes = !activeTypes.length || activeTypes.every((type) => p.types.includes(type));
 
-            return matchesSearch && matchesTypes;
-        })
-        .sort((a, b) => {
-            if (sort === "name") return a.name.localeCompare(b.name);
-            if (sort === "name-desc") return b.name.localeCompare(a.name);
-            if (sort === "number-desc") return b.id - a.id;
-            return a.id - b.id
-        });
+                return matchesSearch && matchesTypes;
+            })
+            .sort((a, b) => {
+                if (sort === "name") return a.name.localeCompare(b.name);
+                if (sort === "name-desc") return b.name.localeCompare(a.name);
+                if (sort === "number-desc") return b.id - a.id;
+                return a.id - b.id
+            });
     }, [pokemonList, search, activeTypes, sort]);
 
     return (
         <main className="home-shell">
-            <Header 
-            searchValue={search}
-            onSearchChange={setSearch}
-            onToggleFilter={() => setFilterOpen((prev) => !prev)}
-            filterOpen={filterOpen}
+            <Header
+                searchValue={search}
+                onSearchChange={setSearch}
+                onToggleFilter={() => setFilterOpen((prev) => !prev)}
+                filterOpen={filterOpen}
             />
-            <section className="home-hero">
-                <div className="hero-ball ball-left" />
-                <div className="hero-ball ball-right" />
-                <img className="hero-logo" src={heroLogo} alt="PokéDex" />
-            </section>
 
             <section className="home-content">
                 <FilterPanel
-                isOpen={filterOpen}
-                activeTypes={activeTypes}
-                onToggleType={toggleType}
-                sort={sort}
-                onSortChange={setSort}
-                onReset={resetFilters}
+                    isOpen={filterOpen}
+                    activeTypes={activeTypes}
+                    onToggleType={toggleType}
+                    sort={sort}
+                    onSortChange={setSort}
+                    onReset={resetFilters}
                 />
-                
+
                 <div className="results-summary">
                     <span>{visiblePokemon.length} Pokémon displayed</span>
                     <span>
@@ -130,15 +124,15 @@ export function HomeView() {
                 )}
 
                 <PokemonGrid
-                pokemonList={visiblePokemon}
-                loading={loading}
-                onResetFilters={resetFilters}
+                    pokemonList={visiblePokemon}
+                    loading={loading}
+                    onResetFilters={resetFilters}
                 />
 
                 <LoadMoreButton
-                onLoadMore={loadNextBatch}
-                loading={loading}
-                hasMore={hasMore}
+                    onLoadMore={loadNextBatch}
+                    loading={loading}
+                    hasMore={hasMore}
                 />
             </section>
         </main>

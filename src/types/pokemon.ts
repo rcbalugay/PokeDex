@@ -22,18 +22,32 @@ export interface PokeApiPokemon {
     weight: number;
     types: PokemonTypeInfo[];
     stats: PokemonStatInfo[];
+    abilities: Array<{
+        ability: { name: string; url: string };
+        is_hidden: boolean;
+        slot: number;
+    }>;
     sprites: {
         other?: {
             "official-artwork": {
                 front_default?: string;
+                front_shiny?: string;
             };
         };
+    };
+    species: {
+        name: string;
+        url: string;
     };
 }
 
 export interface PokeApiSpecies {
     id: number;
     name: string;
+    gender_rate: number;
+    evolution_chain?: {
+        url: string;
+    };
     genera: Array<{
         genus: string;
         language: { name: string };
@@ -46,9 +60,35 @@ export interface PokeApiSpecies {
         name: string;
         language: { name: string };
     }>;
+    varieties?: Array<{
+        is_default: boolean;
+        pokemon: {
+            name: string;
+            url: string;
+        };
+    }>;
     generation: {
         name: string;
     };
+}
+
+export interface PokemonVariety {
+    id: number;
+    name: string;
+    isDefault: boolean;
+}
+
+export interface EvolutionStage {
+    id: number;
+    name: string;
+    types: string[];
+    imageUrl: string;
+    depth?: number;
+}
+
+export interface AdjacentPokemon {
+    id: number;
+    name: string;
 }
 
 export interface PokemonCardData {
@@ -63,7 +103,11 @@ export interface PokemonCardData {
     category: string;
     stats: number[];
     imageUrl: string;
+    shinyImageUrl: string;
+    abilities: string[];
+    genderRate: number;
     weaknesses: string[];
+    varieties: PokemonVariety[];
 }
 
 export interface PokemonListResponse {

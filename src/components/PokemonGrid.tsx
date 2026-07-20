@@ -25,8 +25,8 @@ export function PokemonGrid({
 
     return (
         <div className="pokemon-grid">
-            {pokemonList.map((pokemon) => (
-                <PokemonCard key={pokemon.id} pokemon={pokemon} />
+            {pokemonList.map((pokemon, index) => (
+                <PokemonCard key={pokemon.id} pokemon={pokemon} index={index} />
             ))}
             {loading && Array.from({ length: 4 }).map((_, index) => (
                 <div key={`skeleton-${index}`} className="home-card skeleton-card">

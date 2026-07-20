@@ -3,7 +3,14 @@ export function padId(id: number): string {
 }
 
 export function getImageUrl(id: number): string {
+    if (id >= 10000) {
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+    }
     return `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${padId(id)}.png`;
+}
+
+export function getShinyImageUrl(id: number): string {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${id}.png`;
 }
 
 export function formatHeight(decimeters: number): string {

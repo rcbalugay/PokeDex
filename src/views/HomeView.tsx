@@ -29,18 +29,19 @@ export function HomeView() {
                 setHasMore(false);
                 return;
             }
-            const cardDataPromises = listRes.results.map((item) => getPokemonCardData(item.name)
-            );
+            const cardDataPromises = listRes.results.map((item) => getPokemonCardData(item.name));
             const newCards = await Promise.all(cardDataPromises);
+
+            const filteredNew = newCards.filter((c) => c.id < 10000);
 
             setPokemonList((prev) => {
                 const existingIds = new Set(prev.map((p) => p.id));
-                const filteredNew = newCards.filter((c) => !existingIds.has(c.id));
-                return [...prev, ...filteredNew];
+                const uniqueNew = filteredNew.filter((c) => !existingIds.has(c.id));
+                return [...prev, ...uniqueNew];
             });
 
             setOffset((prev) => prev + PAGE_SIZE);
-            if (listRes.results.length < PAGE_SIZE) {
+            if (listRes.results.length < PAGE_SIZE || newCards.some((c) => c.id >= 10000)) {
                 setHasMore(false);
             }
         } catch (err) {
@@ -84,12 +85,25 @@ export function HomeView() {
                 if (sort === "name") return a.name.localeCompare(b.name);
                 if (sort === "name-desc") return b.name.localeCompare(a.name);
                 if (sort === "number-desc") return b.id - a.id;
-                return a.id - b.id
+                return a.id - b.id;
             });
     }, [pokemonList, search, activeTypes, sort]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (loading || !hasMore) return;
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 350) {
+                loadNextBatch();
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [loadNextBatch, loading, hasMore]);
+
     return (
         <main className="home-shell">
+            <div className="home-shell page-transition">
             <Header
                 searchValue={search}
                 onSearchChange={setSearch}
@@ -106,13 +120,6 @@ export function HomeView() {
                     onSortChange={setSort}
                     onReset={resetFilters}
                 />
-
-                <div className="results-summary">
-                    <span>{visiblePokemon.length} Pokémon displayed</span>
-                    <span>
-                        {activeTypes.length ? `Types: ${activeTypes.join(" + ")}` : "All types"}
-                    </span>
-                </div>
 
                 {error && (
                     <div className="error-banner">
@@ -135,6 +142,7 @@ export function HomeView() {
                     hasMore={hasMore}
                 />
             </section>
+            </div>
         </main>
     );
 } 

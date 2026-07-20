@@ -5,6 +5,7 @@ import { padId } from "../utils/formatters";
 
 interface PokemonCardProps {
     pokemon: PokemonCardData;
+    index?: number;
 }
 
 const TYPE_COLORS: Record<string, string> = {
@@ -28,7 +29,7 @@ const TYPE_COLORS: Record<string, string> = {
     Flying: '#8094ee',
 };
 
-export function PokemonCard({ pokemon }: PokemonCardProps) {
+export function PokemonCard({ pokemon, index = 0 }: PokemonCardProps) {
     const [imgError, setImgError] = useState(false);
     const fallbackUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
 
@@ -36,7 +37,7 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
     const cardColor = TYPE_COLORS[primaryType] || '#a9a47f';
 
     return (
-        <Link to={`/pokemon/${pokemon.id}`} className="v-card" style={{ '--card-bg': cardColor} as React.CSSProperties}>
+        <Link to={`/pokemon/${pokemon.id}`} className="v-card card-stagger" style={{ '--card-bg': cardColor, animationDelay: `${(index % 10) * 0.04}s`} as React.CSSProperties}>
             <div className="v-card-top">
                 <span className="v-card-id">{padId(pokemon.id)}</span>
                 <img

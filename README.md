@@ -1,24 +1,20 @@
-# Pokédex Web Application
+# Pokédex
 
-A modern, responsive Pokédex web application built with **React 19**, **TypeScript**, **Vite**, and **Tailwind CSS**. It connects to the [PokéAPI](https://pokeapi.co/) to deliver detailed information, statistics, and evolution paths for Pokémon.
+A web application built with **React 19**, **TypeScript**, **Vite**, and **Tailwind CSS** that pulls live data from [PokéAPI](https://pokeapi.co/). Browse the grid, inspect base stats and evolution chains, or search for any Pokémon.
 
 ---
 
 ## Features
 
-- 🔍 **Real-Time Search & Filtering**: Search Pokémon by name or ID (#0001 format), filter by elemental types, and sort by ID or alphabetical order.
-- 📜 **Infinite Scrolling & Pagination**: Dynamically fetches and appends Pokémon data as you scroll down the main grid.
-- 🎨 **Detailed Pokémon View**:
-  - Full artwork view with **Normal** and **Shiny** variant toggles.
-  - Complete **Evolution Chain Tree** with interactive nodes to jump to related Pokémon.
-  - Base statistics bars (HP, Attack, Defense, Sp. Atk, Sp. Def, Speed).
-  - Type effectiveness and weakness badges.
-  - Flavor text stories, physical specs (height, weight, category, gender ratio), and abilities.
-  - Next / Previous edge navigation.
-- ⚡ **Animations & Micro-Interactions**:
-  - Staggered card entrance animations.
-  - CSS-animated Pokéball loading indicator.
-  - Page entry/exit transitions.
+- **Search & Filtering**: Search by name or Pokedex number (e.g., `#0001`), filter by elemental types, and sort by ID or name.
+- **Infinite Scroll**: Loads more Pokémon automatically as you scroll down the page.
+- **Detailed Pokémon Breakdown**:
+  - Official artwork with toggles for Normal and Shiny forms.
+  - Evolution trees with clickable nodes to navigate between stages.
+  - Base stat bars (HP, Attack, Defense, Sp. Atk, Sp. Def, Speed).
+  - Type weakness badges, abilities, gender ratios, height, weight, and flavor text descriptions.
+  - Quick next/previous controls to navigate adjacent Pokémon.
+- **Animations & Transitions**: Staggered card entrance effects, page transitions, and a custom CSS Pokéball loading spinner.
 
 ---
 
